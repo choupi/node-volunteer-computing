@@ -22,8 +22,9 @@ http.createServer(function (req, res) {
       res.end();
     }
     break;
-  case '/submit':
-    //console.log(req.body.cypher);
+  case '/submit/':
+    var task=Object.keys(path.query)[0];
+    //console.log(task);
     var body='';
     req.on('data', function (data) { body+=data; });
     req.on('end', function () { 
@@ -33,7 +34,7 @@ http.createServer(function (req, res) {
         res.end();
         var db=new mongo.Db('ranbow', new mongo.Server(mongoIP, mongoPort, {}), {safe:false});
         db.open(function(err,db) { 
-          db.collection('ranbow', function(err,collection) {
+          db.collection(task, function(err,collection) {
             collection.insert(r, function(err, docs) {
               console.log(docs);
               db.close();
@@ -42,6 +43,23 @@ http.createServer(function (req, res) {
         });
     });
     break;
+/*
+  case '/get/':
+    var task=Object.keys(path.query)[0];
+    var db=new mongo.Db('ranbow', new mongo.Server(mongoIP, mongoPort, {}), {safe:false});
+    db.open(function(err,db) { 
+      db.collection(task, function(err,collection) {
+        collection.findOne({}, {'sort':[['_id','desc']]}, function(err, docs) {
+          console.log(docs);
+          var r=JSON.stringify(docs);
+          res.writeHead(200,{'Content-Type': 'application/json'});
+          res.end(r);
+          db.close();
+        });
+      });
+    });
+    break;
+*/
   default:
     res.writeHead(404);
     res.end();
