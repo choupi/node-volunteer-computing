@@ -6,12 +6,22 @@ var db=new mongo.Db('ranbow', new mongo.Server(mongoIP, mongoPort, {}), {});
 
 http.createServer(function (req, res) {
   var dt=new Date().toISOString();
-  var path = url.parse(req.url);
+  var path = url.parse(req.url, true);
   //res.writeHead(200, {'Content-Type': 'text/plain'});
   switch (path.pathname) {
   case '/':
     res.setHeader("Content-Type", "text/html; charset=UTF-8");
     fs.createReadStream('index.html').pipe(res);
+    break;
+  case '/js/':
+    //console.log(Object.keys(path.query)[0]);
+    if(fs.existsSync('js/'+Object.keys(path.query)[0]+'.js')) {
+        res.setHeader("Content-Type", "application/x-javascript");
+        fs.createReadStream('js/'+Object.keys(path.query)[0]+'.js').pipe(res);
+    } else {
+      res.writeHead(404);
+      res.end();
+    }
     break;
   case '/submit':
     //console.log(req.body.cypher);
