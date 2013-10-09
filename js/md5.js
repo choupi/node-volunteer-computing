@@ -3,6 +3,7 @@
 
 var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
 //self.setTimeout(function () { job() }, 3000);
+//var timer;
 function job () {
     var cypher='', clen=8;
     for (var i=0; i<clen; i++) {
@@ -11,10 +12,11 @@ function job () {
     }
     var encrypt = md5(cypher);
 
+    //document.getElementById('output').innerHTML=timer+':'+cypher+':'+encrypt;
     document.getElementById('output').innerHTML=cypher+':'+encrypt;
     var http = new XMLHttpRequest();
     http.open('POST', '/submit/?ranbow');
     http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     http.send(JSON.stringify({body: {cypher: cypher, encrypt: encrypt}}));
-    self.setTimeout(function () { job() }, 3000);
+    //timer=self.setTimeout(function () { job() }, 3000);
 }

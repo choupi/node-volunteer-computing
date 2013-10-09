@@ -1,13 +1,17 @@
 <html><head>
 <script src="/js/?md5.min"></script>
 <script>
+var timer;
 function taskSelect() {
+  //clearTimeout(timer);
+  clearInterval(timer);
   var t=document.getElementById('task-select').value;
   var fileref=document.createElement('script');
   fileref.setAttribute("type","text/javascript");
   fileref.setAttribute("src", '/js/?'+t);
   document.getElementsByTagName("head")[0].appendChild(fileref);
-  self.setTimeout(function () { job() }, 3000);
+  //timer=self.setTimeout(function () { job() }, 3000);
+  timer=setInterval("job()", 3000);
 }
 </script>
 </head>
