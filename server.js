@@ -36,7 +36,7 @@ http.createServer(function (req, res) {
         db.open(function(err,db) { 
           db.collection(task, function(err,collection) {
             collection.insert(r, function(err, docs) {
-              console.log(docs);
+              console.log(task+')'+JSON.stringify(docs));
               db.close();
             });
           });
@@ -44,12 +44,12 @@ http.createServer(function (req, res) {
     });
     break;
   case '/get/':
-    var task=Object.keys(path.query)[0];
+    var gtask=Object.keys(path.query)[0];
     var db=new mongo.Db('ranbow', new mongo.Server(mongoIP, mongoPort, {}), {safe:false});
     db.open(function(err,db) { 
-      db.collection(task, function(err,collection) {
+      db.collection(gtask, function(err,collection) {
         collection.findOne({}, {'sort':[['_id','desc']]}, function(err, docs) {
-          console.log(docs);
+          console.log(gtask+'('+JSON.stringify(docs));
           var r=JSON.stringify(docs);
           res.writeHead(200,{'Content-Type': 'application/json'});
           res.end(r);
