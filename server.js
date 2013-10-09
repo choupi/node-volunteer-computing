@@ -43,7 +43,6 @@ http.createServer(function (req, res) {
         });
     });
     break;
-/*
   case '/get/':
     var task=Object.keys(path.query)[0];
     var db=new mongo.Db('ranbow', new mongo.Server(mongoIP, mongoPort, {}), {safe:false});
@@ -59,7 +58,6 @@ http.createServer(function (req, res) {
       });
     });
     break;
-*/
   default:
     res.writeHead(404);
     res.end();
