@@ -2,7 +2,6 @@ var mongo = require('mongodb');
 var http= require('http'), url = require('url'), fs = require('fs');;
 var serverIP='0.0.0.0', port=8124;
 var mongoIP='127.0.0.1', mongoPort=27017;
-var db=new mongo.Db('ranbow', new mongo.Server(mongoIP, mongoPort, {}), {});
 
 http.createServer(function (req, res) {
   var dt=new Date().toISOString();
@@ -32,6 +31,7 @@ http.createServer(function (req, res) {
         //console.log(r['cypher']+':'+r['encrypt']);
         res.writeHead(200,{'Content-Type': 'text/plain'});
         res.end();
+        var db=new mongo.Db('ranbow', new mongo.Server(mongoIP, mongoPort, {}), {safe:false});
         db.open(function(err,db) { 
           db.collection('ranbow', function(err,collection) {
             collection.insert(r, function(err, docs) {
