@@ -28,7 +28,7 @@ http.createServer(function (req, res) {
     var body='';
     req.on('data', function (data) { body+=data; });
     req.on('end', function () { 
-        r=JSON.parse(body)['body'];
+        var r=JSON.parse(body)['body'];
         //console.log(r['cypher']+':'+r['encrypt']);
         res.writeHead(200,{'Content-Type': 'text/plain'});
         res.end();
